@@ -145,7 +145,7 @@ function onMinesChange() {
   settings.mines = newMines;
 }
 
-let tileElements = field.querySelectorAll('.tile');
+let tileElements = field.querySelectorAll('#field > div');
 
 function render() {
   tileElements.forEach((tile, index) => {
@@ -153,7 +153,7 @@ function render() {
     const col = index % settings.cols;
 
     const tileState = state.field[row][col];
-    tile.setAttribute('data-state', tileState);
+    tile.setAttribute('data-s', tileState);
   });
 }
 
@@ -200,10 +200,12 @@ function forAllNeighbors(row, col, callback) {
 }
 
 function onTileClick(row, col) {
+  let firstClick = false;
   switch (state.phase) {
     case Phase.Stopped:
       setPhase(Phase.Running);
       startTimer();
+      firstClick = true;
       break;
     case Phase.Win:
     case Phase.Lose:
@@ -233,8 +235,23 @@ function onTileClick(row, col) {
 
       return;
     case TileState.Mine:
-      setPhase(Phase.Lose);
-      return;
+      if (firstClick) {
+        // move mine to another tile
+        console.log('moving mine becuase you were unlucky');
+        let newMineRow;
+        let newMineCol;
+
+        do {
+          newMineRow = Math.floor(Math.random() * settings.rows);
+          newMineCol = Math.floor(Math.random() * settings.cols);
+        } while (state.field[newMineRow][newMineCol] === TileState.Mine);
+
+        setTile(row, col, TileState.Empty);
+        setTile(newMineRow, newMineCol, TileState.Mine);
+      } else {
+        setPhase(Phase.Lose);
+        return;
+      }
   }
 
   let neighboringMines = 0;
@@ -365,9 +382,7 @@ function newGame() {
 
       const tileEl = document.createElement('div');
 
-      tileEl.className = 'tile';
-
-      tileEl.setAttribute('data-state', tile);
+      tileEl.setAttribute('data-s', tile);
 
       tileEl.onclick = () => onTileClick(row, col);
       tileEl.oncontextmenu = (e) => onTileRightClick(e, row, col);
@@ -376,7 +391,7 @@ function newGame() {
     }
   }
 
-  tileElements = field.querySelectorAll('.tile');
+  tileElements = field.querySelectorAll('#field > div');
 
   calculateTileSize();
 

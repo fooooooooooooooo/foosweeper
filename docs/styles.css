@@ -21,13 +21,16 @@ body {
 
   color: #fff;
 
+  --border: 1px solid #303436;
+  --tile: #262a2b;
+
   padding: 4px;
 }
 
 input {
   background-color: #000;
   color: #fff;
-  border: 1px solid #fff;
+  border: var(--border);
   padding: 4px;
   font-size: 1rem;
   width: 100%;
@@ -45,7 +48,7 @@ button {
   padding: 8px;
   font-size: 1rem;
   cursor: pointer;
-  border: 1px solid #fff;
+  border: var(--border);
 }
 
 code {
@@ -64,7 +67,7 @@ main {
   height: 100%;
   width: 100%;
 
-  border: 1px solid #fff;
+  border: var(--border);
 }
 
 #controls {
@@ -85,7 +88,7 @@ main {
   gap: 4px;
   padding: 4px;
 
-  border-left: 1px solid #fff;
+  border-left: var(--border);
 }
 
 #stats code {
@@ -96,12 +99,12 @@ main {
   font-family: 'Micro 5', sans-serif;
 }
 
-.tile {
+#field > div {
   width: var(--size);
   height: var(--size);
 
   cursor: pointer;
-  border: 1px solid #fff;
+  border: var(--border);
   border-top: 0;
   border-left: 0;
 
@@ -110,7 +113,7 @@ main {
   font-style: normal;
 }
 
-.tile::after {
+#field > div::after {
   content: var(--icon, '');
   display: block;
   width: var(--size);
@@ -121,85 +124,85 @@ main {
   line-height: var(--size);
 }
 
-.tile[data-state='0'],
-.tile[data-state='1'] {
+#field > div[data-s='0'],
+#field > div[data-s='1'] {
   --icon: '';
-  background-color: #333;
+  background-color: var(--tile);
 }
 
-.win .tile[data-state='1'],
-.win .tile[data-state='3'] {
+.win #field > div[data-s='1'],
+.win #field > div[data-s='3'] {
   --icon: '💣';
 }
 
-.lose .tile[data-state='1'],
-.lose .tile[data-state='3'] {
+.lose #field > div[data-s='1'],
+.lose #field > div[data-s='3'] {
   --icon: '💥';
-  background-color: #333;
+  background-color: var(--tile);
 }
 
-.win .tile[data-state='3'],
-.lose .tile[data-state='3'] {
+.win #field > div[data-s='3'],
+.lose #field > div[data-s='3'] {
   border: 1px solid #f8312f;
 }
 
-.tile[data-state='2'],
-.tile[data-state='3'] {
+#field > div[data-s='2'],
+#field > div[data-s='3'] {
   --icon: '🚩';
-  background-color: #333;
+  background-color: var(--tile);
 }
 
-.win .tile[data-state='1']::after,
-.win .tile[data-state='3']::after,
-.lose .tile[data-state='1']::after,
-.lose .tile[data-state='3']::after,
-.tile[data-state='2']::after,
-.tile[data-state='3']::after {
+.win #field > div[data-s='1']::after,
+.win #field > div[data-s='3']::after,
+.lose #field > div[data-s='1']::after,
+.lose #field > div[data-s='3']::after,
+#field > div[data-s='2']::after,
+#field > div[data-s='3']::after {
   font-size: calc(var(--size) * 0.6);
 }
 
-.tile[data-state='4'] {
+#field > div[data-s='4'] {
   --icon: '';
 }
 
-.tile[data-state='5'] {
+#field > div[data-s='5'] {
   --icon: '1';
-  color: hsl(240, 70%, 60%);
+  color: #3473df;
 }
 
-.tile[data-state='6'] {
+#field > div[data-s='6'] {
   --icon: '2';
-  color: #00cf00;
+  color: #3bff3b;
 }
 
-.tile[data-state='7'] {
+#field > div[data-s='7'] {
   --icon: '3';
-  color: #ff0000;
+  color: #ff1a1a;
 }
 
-.tile[data-state='8'] {
+#field > div[data-s='8'] {
   --icon: '4';
-  color: #000080;
+  color: #7faeff;
 }
 
-.tile[data-state='9'] {
+#field > div[data-s='9'] {
   --icon: '5';
-  color: #800000;
+  color: #ff7272;
 }
 
-.tile[data-state='10'] {
+#field > div[data-s='10'] {
   --icon: '6';
   color: #2a9494;
 }
 
-.tile[data-state='11'] {
+#field > div[data-s='11'] {
   --icon: '7';
   color: #ffffff;
 }
 
-.tile[data-state='12'] {
+#field > div[data-s='12'] {
   --icon: '8';
-  color: #808080;
+  color: #ff00b3;
 }
 
 .field {
@@ -215,7 +218,7 @@ main {
 
   padding: 4px;
 
-  border-top: 1px solid #fff;
+  border-top: var(--border);
 }
 
 #field {
@@ -225,8 +228,8 @@ main {
   --rows: 10;
   --size: 36px;
 
-  border-left: 1px solid #fff;
-  border-top: 1px solid #fff;
+  border-left: var(--border);
+  border-top: var(--border);
 
   grid-template-columns: repeat(var(--cols), var(--size));
   grid-template-rows: repeat(var(--rows), var(--size));
@@ -237,7 +240,7 @@ main {
   justify-content: center;
   align-items: center;
 
-  border-left: 1px solid #fff;
+  border-left: var(--border);
 }
 
 #status {
