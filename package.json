@@ -1,0 +1,8 @@
+{
+  "name": "foosweeper",
+  "packageManager": "yarn@4.2.2",
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.3"
+  }
+}
